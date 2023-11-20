@@ -29,12 +29,15 @@ import time
 import random 
 from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 import asyncio
+from pytube import Playlist
 from pyrogram import Client, filters
 from pyrogram.errors.exceptions import MessageIdInvalid
 import os
+from moviepy.editor import *
 import yt_dlp
 from bs4 import BeautifulSoup
 from pyrogram.types import InputMediaDocument
+from pyshorteners import Shortener
 
 botStartTime = time.time()
 batch = []
@@ -51,6 +54,14 @@ async def start_handler(bot: Client, m: Message):
         "[Generic Services]\n"
         "1. For All PDF /pdf\n"
         "2. For TXT /tor\n"
+        "3. Generic with headers from DRMHeaders.py\n"
+        "4. JSON Widevine challenge, headers from DRMHeaders.py \n\n"
+        "[Specific Services]\n"
+        "5. Classplus Non DRM Downloads\n"
+        "6. YouTube VOD with DRM\n"
+        "7. Classsuplus with and alone VDOCipher\n"
+        "8. StudyIQ\n"
+        "9. Adda247\n"
     )
     
     await m.reply_text(menu_text)
@@ -174,7 +185,12 @@ async def stats(_,event: Message):
             f'Memory Used: {mem_u}\n'
     
     await event.reply_text(f"{stats}")    
-      
+
+@bot.on_message(filters.command(["terms"]))
+async def terms_han(bot: Client, m: Message):
+	
+	await m.reply_text("Dear user,\n\nWelcome to our video downloader bot on Telegram. Before you start using our bot, please read these terms and conditions carefully.\n\nBy using our bot, you agree to the following terms and conditions:\n\n1. Our bot is intended for personal, non-commercial use only. You are responsible for any content that you download through our bot and you should ensure that you have the necessary permissions and rights to use and share the content.\n\n2. Downloading copyrighted content through our bot is strictly prohibited. If we receive any complaints of copyright infringement, we reserve the right to take down the infringing content and terminate the user's access to our bot.\n\n3. We do not store any of your personal data or download history. Your privacy and security are important to us, and we have taken all necessary measures to ensure that your information is safe and protected.\n\n4. We reserve the right to suspend or terminate the bot's services at any time and for any reason.\n\n5. By using our bot, you agree to indemnify and hold us harmless from any claims, damages,\nor losses arising from your use of our bot.\n\nIf you have any questions or concerns about our terms and conditions, please contact us.\n\nThank you for using our video downloader bot on Telegram.\n\nBest regards")
+        
 @bot.on_message(filters.command(["tor"])&(filters.chat(sudo_groups)))
 async def txt_handler(bot: Client, m: Message):
     
