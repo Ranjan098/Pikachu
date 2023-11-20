@@ -1,7 +1,7 @@
 Flask
 gunicorn==20.1.0
 aiohttp
-pyrogram
+pyrogram==1.4.16
 ffmpeg
 tgcrypto
 requests
