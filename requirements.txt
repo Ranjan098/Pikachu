@@ -14,4 +14,7 @@ opencv-python-headless
 psutil
 speedtest-cli 
 jinja2
+pytube
+moviepy
 bs4
+pyshorteners
