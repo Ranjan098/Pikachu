@@ -29,15 +29,12 @@ import time
 import random 
 from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 import asyncio
-from pytube import Playlist
 from pyrogram import Client, filters
 from pyrogram.errors.exceptions import MessageIdInvalid
 import os
-from moviepy.editor import *
 import yt_dlp
 from bs4 import BeautifulSoup
 from pyrogram.types import InputMediaDocument
-from pyshorteners import Shortener
 
 botStartTime = time.time()
 batch = []
