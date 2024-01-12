@@ -61,8 +61,8 @@ async def start_handler(bot: Client, m: Message):
 
 @bot.on_message(filters.command(["restart"]))
 async def restart_handler(bot: Client, m: Message):
- rcredit = "Bot Restarted by " + f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
- if (f'{m.from_user.id}' in batch or batch == []) or m.from_user.id == sudo_groups:
+ rcredit = "Bot Restarted by "
+ #if (f'{m.from_user.id}' in batch or batch == []) or m.from_user.id == sudo_groups:
     await m.reply_text("Restarted ✅", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
  else:
