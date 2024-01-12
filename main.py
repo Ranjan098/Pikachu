@@ -60,6 +60,7 @@ async def start_handler(bot: Client, m: Message):
 @bot.on_message(filters.command(["restart"]))
 async def restart_handler(bot: Client, m: Message):
  rcredit = "Bot Restarted by"
+ if (f'{m.from_user.id}' in batch or batch == []) or m.from_user.id == sudo_user:   
     await m.reply_text("Restarted ✅", True)
     await bot.send_message(rcredit)
     os.execl(sys.executable, sys.executable, *sys.argv)
