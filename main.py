@@ -186,7 +186,7 @@ async def txt_handler(bot: Client, m: Message):
         await m.reply("**⚠️ One Process Is Already Running**", quote=True)
         return
     else:
-        batch.append(f'{m.from_user.id}')
+        batch.append
         editable  = await m.reply_text("Send links listed in a txt file in format **Name:link**") 
     input0: Message = await bot.listen(editable.chat.id)
     x = await input0.download()
