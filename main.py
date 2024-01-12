@@ -56,44 +56,11 @@ async def start_handler(bot: Client, m: Message):
         "2. For TXT /tor\n"        
     )
     
-    await m.reply_text(menu_text)
 
-
-@bot.on_message(filters.command(["restart"]))
-async def restart_handler(bot: Client, m: Message):
- rcredit = "Bot Restarted by "
- #if (f'{m.from_user.id}' in batch or batch == []) or m.from_user.id == sudo_groups:
-    await m.reply_text("Restarted ✅", True)
+@bot.on_message(filters.command("stop")) 
+async def restart_handler(_, m):
+    await m.reply_text("**STOPPED**🛑🛑", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
- else:
- 	await m.reply_text("You are not started this batch 😶.")
-
-def meFormatter(milliseconds) -> str:
-    milliseconds = int(milliseconds) * 1000
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
-    minutes, seconds = divmod(seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    days, hours = divmod(hours, 24)
-    tmp = (
-        (f"{str(days)}d, " if days else "")
-        + (f"{str(hours)}h, " if hours else "")
-        + (f"{str(minutes)}m, " if minutes else "")
-        + (f"{str(seconds)}s, " if seconds else "")
-        + (f"{str(milliseconds)}ms, " if milliseconds else "")
-    )
-    return tmp[:-2]
-  
-def humanbytes(size):
-    size = int(size)
-    if not size:
-        return ""
-    power = 2**10
-    n = 0
-    Dic_powerN = {0: ' ', 1: 'Ki', 2: 'Mi', 3: 'Gi', 4: 'Ti'}
-    while size > power:
-        size /= power
-        n += 1
-    return f"{str(round(size, 2))} {Dic_powerN[n]}B"
 
 @bot.on_message(filters.command(["pdf"])&(filters.chat(sudo_groups)))
 async def c_pdf(bot: Client, m: Message):
