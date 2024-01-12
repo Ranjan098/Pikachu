@@ -55,7 +55,7 @@ async def start_handler(bot: Client, m: Message):
         "1. For All PDF /pdf\n"
         "2. For TXT /tor\n"        
     )
-    
+    await m.reply_text(menu_text) 
 
 @bot.on_message(filters.command("stop")) 
 async def restart_handler(_, m):
