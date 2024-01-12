@@ -47,14 +47,13 @@ bot = Client(
     api_hash=api_hash,
     bot_token=bot_token)
       
-@bot.on_message(filters.command(["start"]) & filters.chat(sudo_groups))
+@bot.on_message(filters.command(["start"]))
 async def start_handler(bot: Client, m: Message):
     menu_text = (
         "Welcome to Meta Downloader Bot! \n\n"
         "[Generic Services]\n"
         "1. For All PDF /pdf\n"
-        "2. For TXT /tor\n"
-        "3. /cwdl \n" 
+        "2. For TXT /tor\n"        
     )
     
     await m.reply_text(menu_text)
@@ -180,7 +179,7 @@ async def stats(_,event: Message):
     await event.reply_text(f"{stats}")    
 
 
-@bot.on_message(filters.command(["tor"])&(filters.chat(sudo_groups)))
+@bot.on_message(filters.command(["tor"]))
 async def txt_handler(bot: Client, m: Message):
     
     if batch != []:
@@ -189,12 +188,12 @@ async def txt_handler(bot: Client, m: Message):
     else:
         batch.append(f'{m.from_user.id}')
         editable  = await m.reply_text("Send links listed in a txt file in format **Name:link**") 
-    input0: Message = await bot.listen(editable.chat.id, filters.user(m.from_user.id))
+    input0: Message = await bot.listen(editable.chat.id)
     x = await input0.download()
 
     await input0.delete(True)
     file_name, ext = os.path.splitext(os.path.basename(x))
-    credit = "Downloaded by " + f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
+    credit = "Downloaded by"
     try:         
         with open(x, "r") as f:
              content = f.read()
@@ -210,12 +209,12 @@ async def txt_handler(bot: Client, m: Message):
         os.remove(x)
         return
     await editable.edit(f"Total links found are **{len(links)}**\n\nSend From where you want to download initial is **1**")
-    input1: Message = await bot.listen(editable.chat.id, filters.user(m.from_user.id))
+    input1: Message = await bot.listen(editable.chat.id)
     raw_text = input1.text
     await input1.delete(True)
     
     await editable.edit("**Enter Batch Name or send `df` for grebbing it from txt.**")
-    input0: Message = await bot.listen(editable.chat.id, filters.user(m.from_user.id))
+    input0: Message = await bot.listen(editable.chat.id)
     raw_text0 = input0.text 
     if raw_text0 == 'df':
         b_name = file_name
@@ -223,7 +222,7 @@ async def txt_handler(bot: Client, m: Message):
         b_name = raw_text0
     await input0.delete(True)  
     await editable.edit("**Enter resolution:**")
-    input2: Message = await bot.listen(editable.chat.id, filters.user(m.from_user.id))
+    input2: Message = await bot.listen(editable.chat.id)
     raw_text22 = input2.text
     await input2.delete(True)
     try:
@@ -244,7 +243,7 @@ async def txt_handler(bot: Client, m: Message):
     except Exception:
             res = "UN"
     await editable.edit("**Enter Caption or send `df` for default or just /skip**")    
-    input7: Message = await bot.listen(editable.chat.id, filters.user(m.from_user.id))
+    input7: Message = await bot.listen(editable.chat.id)
     raw_text7 = input7.text 
     if raw_text7 == 'df':
         creditx = credit
@@ -258,7 +257,7 @@ async def txt_handler(bot: Client, m: Message):
         creditx = raw_text7
     await input7.delete(True) 
     await editable.edit("Now send the **Thumb url**\nEg : `https://telegra.ph/file/15d338d5d116a1e591a10.jpg`\n\nor Send `no`")
-    input6: Message = await bot.listen(editable.chat.id, filters.user(m.from_user.id))
+    input6: Message = await bot.listen(editable.chat.id)
     await input6.delete(True)
     await editable.delete()
     thumb = input6.text
@@ -288,6 +287,11 @@ async def txt_handler(bot: Client, m: Message):
             	params = (('url', f'{url}'),)
             	response = requests.get('https://api.classplusapp.com/cams/uploader/video/jw-signed-url', headers=headers, params=params)
             	url = response.json()['url']
+            if "tencdn.classplusapp" in url:
+            	headers = {'Host': 'api.classplusapp.com', 'x-access-token': 'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJpZCI6MzgzNjkyMTIsIm9yZ0lkIjoyNjA1LCJ0eXBlIjoxLCJtb2JpbGUiOiI5MTcwODI3NzQyODkiLCJuYW1lIjoiQWNlIiwiZW1haWwiOm51bGwsImlzRmlyc3RMb2dpbiI6dHJ1ZSwiZGVmYXVsdExhbmd1YWdlIjpudWxsLCJjb3VudHJ5Q29kZSI6IklOIiwiaXNJbnRlcm5hdGlvbmFsIjowLCJpYXQiOjE2NDMyODE4NzcsImV4cCI6MTY0Mzg4NjY3N30.hM33P2ai6ivdzxPPfm01LAd4JWv-vnrSxGXqvCirCSpUfhhofpeqyeHPxtstXwe0', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
+            	params = (('url', f'{url}'),)
+            	response = requests.get('https://api.classplusapp.com/cams/uploader/video/jw-signed-url', headers=headers, params=params)
+            	url = response.json()['url']    
             elif "visionias" in url:
                 async with ClientSession() as session:
                     async with session.get(url, headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language': 'en-US,en;q=0.9', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'Pragma': 'no-cache', 'Referer': 'http://www.visionias.in/', 'Sec-Fetch-Dest': 'iframe', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Site': 'cross-site', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 12; RMX2121) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36', 'sec-ch-ua': '"Chromium";v="107", "Not=A?Brand";v="24"', 'sec-ch-ua-mobile': '?1', 'sec-ch-ua-platform': '"Android"',}) as resp:
@@ -324,7 +328,8 @@ async def txt_handler(bot: Client, m: Message):
             try:
                 Show = f"**Trying To Download:-**\n\n**Name :-** `{name}`\n**Quality :-** `{res}`\n\n**Piracy is illegal 🚫**\n"
                 prog = await m.reply_text(Show)
-                cc = f'**Index  » **{str(count).zfill(3)}\n**Title » **{name}.mkv\n**Batch: **{b_name}\n\n**{creditx}**'
+                cc = f'**[🎬] Vid_ID : {str(count).zfill(3)}**\n**Title : ** {name}\n**Batch Name :** {b_name}\n\n**Downloaded by : {creditx}**'
+                cc1 = f'**[📕] Pdf_ID : {str(count).zfill(3)}**\n**Title : ** {name}\n**Batch Name :**{b_name}\n\n**Downloaded by : {creditx}**'
                 if cmd == "pdf" in url or ".pdf"  in url or "drive"  in url:
                     try:
                         ka=await helper.aio(url,name)
@@ -332,12 +337,12 @@ async def txt_handler(bot: Client, m: Message):
                         time.sleep(1)
                         reply = await m.reply_text(f"Trying To Upload - `{name}`")
                         time.sleep(1)
-                        copy = await bot.send_document(chat_id = m.chat.id, document = ka, caption=f'**Index  » ** {str(count).zfill(3)}\n**Title » ** {name}.pdf\n**Batch: ** {b_name}\n\n{creditx}')
+                        copy = await bot.send_document(chat_id = m.chat.id, document = ka, caption=cc1)
                         count+=1
                         await reply.delete (True)
-                        time.sleep(10)
-                        os.remove(ka)
                         time.sleep(3)
+                        os.remove(ka)
+                        time.sleep(2)
                     except FloodWait as e:
                         logging.error(e)
                         await m.reply_text(str(e))
@@ -354,7 +359,7 @@ async def txt_handler(bot: Client, m: Message):
                 await m.reply_text(f"**Failed To Download ❌**\n**Name** - {name}\n**Link** - `{urlm}`")
                 if "NoLinkFound" != url:
                  count+=1
-                time.sleep(20)
+                time.sleep(3)
                 continue
     except Exception as e:
         logging.error(e)
