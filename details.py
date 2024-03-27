@@ -1,5 +1,5 @@
-api_id = "20088962"
-api_hash = "257f47d347157555890a64b12bc0134f"
-bot_token = "6389756670:AAHXFERgeoJ_VjtvKx38M1ivGnsvoRDsLuM"
-sudo_groups = -1002090682707
-sudo_user = "5728354372 6169016546 6869889451"
+api_id = "12606917"
+api_hash = "f25113b8c17dca6fa7abda53a86bd4f7"
+bot_token = "6556725895:AAEjYLooGhHwa-VWAnnLavP3nx9DS_mWVEk"
+sudo_groups = -1001699711548
+sudo_user = "5318243282"
